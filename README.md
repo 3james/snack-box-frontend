@@ -1,2 +1,2 @@
 # snack-box-frontend
-snack-box-frontend (vue2.6.6 + bootstrap + axios)
+snack-box-frontend (Vue2.6.6 + Bootstrap + Axios)
