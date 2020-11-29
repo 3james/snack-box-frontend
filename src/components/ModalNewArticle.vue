@@ -43,12 +43,11 @@
               rows="12"
             />
           </b-form-group>
-          <b-button type="submit" variant="primary">Save</b-button>
         </b-form>
       </div>
       <div slot="modal-footer" class="w-100">
-        <p class="float-left"></p>
-        <b-button size="sm" class="float-right" variant="primary" @click="modalClose">Close</b-button>
+        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary">Save</b-button>
+        <b-button class="float-right" variant="primary" @click="modalClose">Close</b-button>
       </div>
     </b-modal>
   </div>

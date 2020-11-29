@@ -1,6 +1,6 @@
 <template>
   <div class="b-container text-center">
-    <div class="title">Snack Box</div>
+    <div class="title">SNACK BOX</div>
     <p>Life is short ! &nbsp;Enjoy yourself !</p>
   </div>
 </template>
