@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <b-container fluid>
     <b-modal
       v-model="show"
       id="modalNewArticle"
-      title="New Article"
+      title="New Story"
       size="lg"
       :header-bg-variant="headerBgVariant"
       :header-text-variant="headerTextVariant"
@@ -13,7 +13,7 @@
       :footer-text-variant="footerTextVariant"
     >
       <div>
-        <b-form @submit="onSave" v-if="show">
+        <b-form @submit="onSubmit" v-if="show">
           <b-form-group
             id="titleFormGroup"
             label="Title"
@@ -30,7 +30,7 @@
           </b-form-group>
           <b-form-group
             id="articleFormGroup"
-            label="Article"
+            label="Story"
             label-for="artlcleTextarea"
             style="text-align: left"
           >
@@ -46,11 +46,11 @@
         </b-form>
       </div>
       <div slot="modal-footer" class="w-100">
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary">Save</b-button>
+        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onSave" >Save</b-button>
         <b-button class="float-right" variant="primary" @click="modalClose">Close</b-button>
       </div>
     </b-modal>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -73,8 +73,12 @@ export default {
   },
   methods: {
     onSave(evt) {
-      var self = this;
       evt.preventDefault();
+      this.onSubmit();
+    },
+    onSubmit(evt) {
+      var self = this;
+      // evt.preventDefault();
 
       var confirmResult = confirm("저장 하시겠습니까?");
       if (confirmResult) {

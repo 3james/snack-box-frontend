@@ -1,23 +1,20 @@
 <template>
   <div>
-    <NavBar/>
-    <MainTitle/>
-    <Article/>
+    <nav-bar/>
+    <sns-main/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import NavBar from "@/components/NavBar.vue";
-import MainTitle from "@/components/MainTitle.vue";
-import Article from "@/components/Article.vue";
+import SnsMain from '@/components/sns/SnsMain.vue';
 
 export default {
   name: "app",
   components: {
     NavBar,
-    MainTitle,
-    Article
+    SnsMain
   }
 };
 </script>
