@@ -1,15 +1,16 @@
 <template>
   <div>
-    <b-container fluid="lg">
+    <b-container fluid="lg" style="max-width: 1024px">
       <ModalNewArticle/>       
 
-      <b-card no-body align="center" class="mb-1 overflow-hidden">
-        <b-row no-gutters>
+      <b-card no-body border-variant="info" class="mb-1 border-0 rounded-0 text-center overflow-hidden">
+        <b-row no-gutters align-v="center" style="background-color: #e9e9e9;">
           <b-col md="8">
             <b-card-img src="https://picsum.photos/1024/370/?image=41" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
-          <b-col md="4">
-            <b-card-body title="STORY BOX">
+          <b-col md="4" >
+            <!-- <b-card-body title="STORY BOX"> -->
+            <b-card-body>
               <b-card-text>
                  Draw your story. Put your story !!
               </b-card-text>
@@ -51,7 +52,6 @@ export default {
   name: "SnsMain",
   data() {
     return {
-      // mainProps: {height: 250},
       lists: []
     }
   },    
@@ -78,26 +78,6 @@ export default {
 </script>
 
 <style scoped>
-
-/* .mainImage {
-  background: url('https://picsum.photos/1024/480/?image=41') no-repeat center;
-  background-size: 100%;
-  height: 250px;
-} */
-
-/* .shadow {
-  background-color: rgb(209, 209, 209, 0.65);
-  background-size: 100%;
-  height: 250px;
-} */
-
-/* .main-top image {
-  max-height: 200px;
-}
-
-.btn {
-  margin-top: 30px;
-} */
 
 .linksyle {
   color: #574545;
