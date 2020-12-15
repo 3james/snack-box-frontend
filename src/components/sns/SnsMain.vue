@@ -72,7 +72,8 @@ export default {
       articleForProp: {},
       modalModeForProp: {
         isView: false,
-      },
+        isModify: false
+      }
     }
   },    
   created() {
@@ -93,11 +94,13 @@ export default {
     popupNewModal: function() {
       this.articleForProp = {};
       this.modalModeForProp.isView = false;
+      this.modalModeForProp.isModify = false;
       this.articalModalVisible = true;
     },
     popupDetailModal: function(article) {      
       this.articleForProp = article;
       this.modalModeForProp.isView = true;
+      this.modalModeForProp.isModify = false;
       this.articalModalVisible = true;
     },
     onClose: function() {

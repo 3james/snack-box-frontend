@@ -1,9 +1,9 @@
 <template>
   <b-container fluid>
     <b-modal
-      v-model="visibleProp"
+      v-model="visible"
       id="modalNewArticle"
-      title="Story is ..."
+      title="Story Box"
       size="lg"
       @close="modalClose"
       :header-bg-variant="headerBgVariant"
@@ -23,7 +23,7 @@
           >
             <b-form-input
               id="titleInput"
-              v-model="title"
+              v-model="article.title"
               type="text"
               required
               placeholder="Enter Title"
@@ -37,7 +37,7 @@
           >
             <b-form-textarea
               id="artlcleTextarea"
-              v-model="content"
+              v-model="article.content"
               type="text"
               required
               placeholder
@@ -47,17 +47,17 @@
         </b-form>
 
         <div v-if="modalModeProp.isView">
-          <h4><b>{{articleProp.title}}</b></h4>
-          <b-card-text class="small text-muted">{{articleProp.createdDate}}</b-card-text>            
-          <b-card-text style="margin-top: 45px">{{articleProp.content}}</b-card-text>       
+          <h4><b>{{article.title}}</b></h4>
+          <b-card-text class="small text-muted">{{article.createdDate}}</b-card-text>            
+          <b-card-text style="margin-top: 45px">{{article.content}}</b-card-text>       
         </div>
 
       </div>
       <div slot="modal-footer" class="w-100">
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onSave" v-if="!modalModeProp.isView">Save</b-button>
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onDelete" v-if="modalModeProp.isView">Delete</b-button>
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onModify" v-if="modalModeProp.isView">Modify</b-button>
-        <b-button class="float-right" variant="primary" @click="modalClose">Close</b-button>
+        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onSave" v-if="!modalModeProp.isView && !modalModeProp.isModify">저장</b-button>
+        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onDelete" v-if="modalModeProp.isView || modalModeProp.isModify">삭제</b-button>
+        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onModify" v-if="modalModeProp.isView || modalModeProp.isModify">수정</b-button>
+        <b-button class="float-right" variant="primary" @click="modalClose">닫기</b-button>
       </div>
     </b-modal>
   </b-container>
@@ -88,17 +88,20 @@ export default {
       bodyTextVariant: "dark",
       footerBgVariant: "light",
       footerTextVariant: "dark",
+      visible: false,
+      modalMode: {},      
       article: {},
-      title: this.articleProp.title,
-      content: this.articleProp.content
     };
   },
   watch: {
+    visibleProp(value) {
+      this.visible = value
+    },    
+    modalModeProp(value) {
+      this.modalMode = value
+    },
     articleProp(value) {
       this.article = value
-    },
-    modalModeProp(value) {
-      // alert(value.isView)
     }
   },
   methods: {
@@ -108,18 +111,16 @@ export default {
     },
     onSubmit(evt) {
       var self = this;
-      // evt.preventDefault();
-
       var confirmResult = confirm("저장 하시겠습니까?");
       if (confirmResult) {
         let form = new FormData();
-        form.append("title", this.title);
-        form.append("content", this.content);
+        form.append("title", this.article.title);
+        form.append("content", this.article.content);
 
         axios
           .post("/api/article", form)
           .then(reponse => {
-            console.warn(reponse);
+            console.log(reponse);
             self.modalClose();
             this.$parent.getArticles();
           })
@@ -130,14 +131,30 @@ export default {
         return;
       }
     },
-    onDelete: function() {
-      alert('deleted!')
+    onModify : function(evt) {
+      evt.preventDefault();
+      this.modalModeProp.isView = false
+      this.modalModeProp.isModify = true
+    },
+    onDelete: function(evt) {
+      var self = this;      
+      var confirmResult = confirm("삭제 하시겠습니까?");
+      if (confirmResult) {
+        axios
+          .delete("/api/article/" + this.article.articleId)
+          .then(reponse => {
+            console.log(reponse);
+            self.modalClose();
+            this.$parent.getArticles();
+          })
+          .catch(ex => {
+            console.warn("ERROR!! : ", ex);
+          });
+      } else {
+        return;
+      }
     },
     modalClose: function() {
-      this.title = "";
-      this.content = "";
-      this.articleProp = {};
-      this.modalModeProp = {};
       this.$emit('closeModal');
     }
   }
