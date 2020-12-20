@@ -5,7 +5,7 @@
         <b-navbar-brand href="#">STORY BOX</b-navbar-brand>
         <b-dropdown size="sm" variant="outline-dark" right no-caret no-flip class="m-0 dropdown-style">
           <template #button-content>
-            <b-button class="navbar-toggler" style="height#: 33px" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <b-button class="navbar-toggler" style="height#: 33px" type="button" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon" style="height#: 19px"></span>
             </b-button>   
           </template>        
