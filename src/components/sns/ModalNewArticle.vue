@@ -11,10 +11,10 @@
       :body-bg-variant="bodyBgVariant"
       :body-text-variant="bodyTextVariant"
       :footer-bg-variant="footerBgVariant"
-      :footer-text-variant="footerTextVariant"
+      :footer-text-variant="footerTextVariant"      
     >
-      <div style="height: 470px">
-        <b-form @submit="onSubmit" v-if="!modalModeProp.isView">
+      <div style="height: 470px; padding: 0 10px">
+        <b-form @submit="onSubmit" v-if="modalModeProp.isCreate || modalModeProp.isModify">
           <b-form-group
             id="titleFormGroup"
             label="Title"
@@ -23,10 +23,11 @@
           >
             <b-form-input
               id="titleInput"
-              v-model="article.title"
+              v-model="editArticle.title"
               type="text"
               required
               placeholder="Enter Title"
+              maxlength="80"
             />
           </b-form-group>
           <b-form-group
@@ -37,27 +38,62 @@
           >
             <b-form-textarea
               id="artlcleTextarea"
-              v-model="article.content"
+              v-model="editArticle.content"
               type="text"
               required
               placeholder
               rows="14"
+              maxlength="3000"
             />
           </b-form-group>
         </b-form>
 
-        <div v-if="modalModeProp.isView">
-          <h4><b>{{article.title}}</b></h4>
-          <b-card-text class="small text-muted">{{article.createdDate}}</b-card-text>            
-          <b-card-text style="margin-top: 45px">{{article.content}}</b-card-text>       
+        <div
+          v-if="modalModeProp.isView"
+          style="height: 470px; overflow-y: auto"
+        >
+          <h4>
+            <b>{{ article.title }}</b>
+          </h4>
+          <b-card-text class="small text-muted" size="lg">{{
+            article.createdDate
+          }}</b-card-text>
+          <b-card-text style="margin-top: 35px">{{
+            article.content
+          }}</b-card-text>
         </div>
-
       </div>
       <div slot="modal-footer" class="w-100">
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onSave" v-if="!modalModeProp.isView && !modalModeProp.isModify">저장</b-button>
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onDelete" v-if="modalModeProp.isView || modalModeProp.isModify">삭제</b-button>
-        <b-button class="float-right" style="margin-left: 5px" type="submit" variant="primary" @click="onModify" v-if="modalModeProp.isView || modalModeProp.isModify">수정</b-button>
-        <b-button class="float-right" variant="primary" @click="modalClose">닫기</b-button>
+        <b-button
+          class="float-right"
+          style="margin-left: 5px"
+          type="submit"
+          variant="primary"
+          @click="onSave"
+          v-if="modalModeProp.isCreate"
+          >저장</b-button
+        >
+        <b-button
+          class="float-right"
+          style="margin-left: 5px"
+          type="submit"
+          variant="primary"
+          @click="onDelete"
+          v-if="modalModeProp.isView || modalModeProp.isModify"
+          >삭제</b-button
+        >
+        <b-button
+          class="float-right"
+          style="margin-left: 5px"
+          type="submit"
+          variant="primary"
+          @click="onModify"
+          v-if="modalModeProp.isView || modalModeProp.isModify"
+          >수정</b-button
+        >
+        <b-button class="float-right" variant="primary" @click="modalClose"
+          >닫기</b-button
+        >
       </div>
     </b-modal>
   </b-container>
@@ -71,14 +107,14 @@ export default {
   props: {
     visibleProp: {
       type: Boolean,
-      default: false
+      default: false,
     },
     modalModeProp: {
-      type: Object
+      type: Object,
     },
     articleProp: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -89,74 +125,117 @@ export default {
       footerBgVariant: "light",
       footerTextVariant: "dark",
       visible: false,
-      modalMode: {},      
+      modalMode: {},
       article: {},
+      editArticle: {},
     };
   },
   watch: {
     visibleProp(value) {
-      this.visible = value
-    },    
+      this.visible = value;
+      this.editArticle = Object.assign({}, this.articleProp);
+    },
     modalModeProp(value) {
-      this.modalMode = value
+      this.modalMode = value;
     },
     articleProp(value) {
-      this.article = value
-    }
+      this.article = value;
+    },
   },
   methods: {
-    onSave(evt) {
-      evt.preventDefault();
+    onSave(event) {
+      event.preventDefault();
       this.onSubmit();
     },
-    onSubmit(evt) {
+    onSubmit(event) {
       var self = this;
+      if (this.editArticle.title === undefined || this.editArticle.content === undefined) {
+          alert('내용을 입력하시기 바랍니다.')
+          return;
+      }
       var confirmResult = confirm("저장 하시겠습니까?");
       if (confirmResult) {
-        let form = new FormData();
-        form.append("title", this.article.title);
-        form.append("content", this.article.content);
+        let url = "/api/article";
+        let param = {
+          title: this.editArticle.title,
+          content: this.editArticle.content,
+        };
 
         axios
-          .post("/api/article", form)
-          .then(reponse => {
+          .post(url, param)
+          .then((reponse) => {
             console.log(reponse);
             self.modalClose();
             this.$parent.getArticles();
           })
-          .catch(ex => {
+          .catch((ex) => {
             console.warn("ERROR!! : ", ex);
           });
       } else {
         return;
       }
     },
-    onModify : function(evt) {
-      evt.preventDefault();
-      this.modalModeProp.isView = false
-      this.modalModeProp.isModify = true
+    onModify: function (event) {
+      event.preventDefault();
+      if (this.modalModeProp.isView) {
+        this.modalModeProp.isCreate = false;
+        this.modalModeProp.isView = false;
+        this.modalModeProp.isModify = true;
+        return;
+      }
+
+      var self = this;
+      var confirmResult = confirm("수정 하시겠습니까?");
+      if (confirmResult) {
+        let url = "/api/article/" + this.article.articleId;
+        let param = {
+          title: this.editArticle.title,
+          content: this.editArticle.content,
+        };
+
+        axios
+          .put(url, param)
+          .then((reponse) => {
+            console.log(reponse);
+            self.modalClose();
+            this.$parent.getArticles();
+          })
+          .catch((ex) => {
+            console.warn("ERROR!! : ", ex);
+          });
+      } else {
+        return;
+      }
     },
-    onDelete: function(evt) {
-      var self = this;      
+    onDelete: function (event) {
+      var self = this;
       var confirmResult = confirm("삭제 하시겠습니까?");
       if (confirmResult) {
         axios
           .delete("/api/article/" + this.article.articleId)
-          .then(reponse => {
+          .then((reponse) => {
             console.log(reponse);
             self.modalClose();
             this.$parent.getArticles();
           })
-          .catch(ex => {
+          .catch((ex) => {
             console.warn("ERROR!! : ", ex);
           });
       } else {
         return;
       }
     },
-    modalClose: function() {
-      this.$emit('closeModal');
-    }
-  }
+    modalClose: function () {
+      this.$emit("closeModal");
+      this.visible = false;
+    },
+  },
 };
 </script>
+
+<style scoped>
+div {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+</style>
