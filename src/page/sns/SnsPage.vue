@@ -41,9 +41,6 @@
           </b-card-text>       
           <b-card-text class="small text-muted">{{article.createdDate}}</b-card-text>
         </b-card-body>
-        <!-- <template #footer>
-          <small class="text-muted">Last updated {{list.createdDate}}</small>
-        </template>            -->
       </b-card>
 
       <b-card v-if="this.articleList.length === 0">
@@ -137,16 +134,20 @@ export default {
   border: 0.1px solid rgb(224, 218, 230)
 }
 
+@media (max-height: 700px) {
+  .b-card-select {
+    max-height: 150px;
+  }
+}
+
 .b-card-select:hover {
   cursor: pointer;
-  /* border: 1px solid rgb(166, 165, 168) */
   border: 0.1px solid rgb(176, 161, 189);
   background-color: #f5f4f8;
 }
 
 .b-card-select .linksyle {
   color: #645d5d;
-  /* color: #574545; */
 }
 
 .b-card-select:hover .linksyle {
@@ -161,22 +162,16 @@ export default {
   height: 220px
 }
 
-.wrap {
-  word-wrap: break-word;
-  word-break: break-word;
-  text-overflow: ellipsis;
-}
-
-@media (max-height: 700px) {
-  .b-card-select {
-    max-height: 150px;
-  }
-}
-
 @media (max-height: 700px) {
   .card-img {
     height: 170px
   }
+}
+
+.wrap {
+  word-wrap: break-word;
+  word-break: break-word;
+  text-overflow: ellipsis;
 }
 
 </style>

@@ -12,8 +12,7 @@
             <b-form-input
               id="input-5"
               v-model="form.email"
-              type="email"
-              placeholder="이메일 입력"
+              type="email"              
               required
             ></b-form-input>
             <b-input-group-append>
@@ -27,8 +26,7 @@
           <b-form-input
             id="input-2"
             v-model="form.pwd"
-            type="password"
-            placeholder="패스워드 입력"
+            type="password"            
             required
           ></b-form-input>
         </b-form-group>        
@@ -37,8 +35,7 @@
           <b-form-input
             id="input-3"
             v-model="form.pwdConfirm"
-            type="password"
-            placeholder="패스워드 확인 입력"
+            type="password"            
             required
           ></b-form-input>
         </b-form-group>        
@@ -52,8 +49,7 @@
             <b-form-input
               id="input-4"
               v-model="form.name"
-              type="text"            
-              placeholder="닉네임 입력"
+              type="text"                      
               required
             ></b-form-input>
             <b-input-group-append>

@@ -40,22 +40,14 @@ export default {
     color: rgba(255,255,255,.5);
     border-color: rgba(255,255,255,.1);
     padding: .25rem .75rem;
-    /* font-size: 1.25rem; */
     font-size: 1.11rem;    
     line-height: 1;
     background-color: transparent;
-    /* border: 1px solid transparent; */
     border-radius: .25rem;    
 }
 
 .toggle-button:hover {
   background-color: rgba(255,255,255,.1);
 }
-
-/* @media (min-width: 1200px) {
-  #b-container {
-    width: 1200px;
-  }
-} */
 
 </style>
