@@ -1,20 +1,14 @@
 <template>
-  <div>
-    <nav-bar/>
-    <sns-main/>
-  </div>
+  <layout/>
 </template>
 
 <script>
 // @ is an alias to /src
-import NavBar from "@/components/NavBar.vue";
-import SnsMain from '@/components/sns/SnsMain.vue';
+import Layout from "@/layout/Layout";
 
 export default {
   name: "app",
-  components: {
-    NavBar,
-    SnsMain 
-  }
+  components: {Layout}
 };
 </script>
+
