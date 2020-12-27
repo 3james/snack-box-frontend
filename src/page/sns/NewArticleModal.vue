@@ -26,14 +26,13 @@
               v-model="editArticle.title"
               type="text"
               required
-              placeholder="Enter Title"
               maxlength="80"
             />
           </b-form-group>
           <b-form-group
             id="articleFormGroup"
             label="Story"
-            label-for="artlcleTextarea"
+            label-for="artlcleTextarea"       
             style="text-align: left"
           >
             <b-form-textarea
@@ -41,13 +40,12 @@
               v-model="editArticle.content"
               type="text"
               required
-              placeholder
               rows="14"
               maxlength="3000"
             />
           </b-form-group>
-          <!-- <b-button class="float-right" type="submit" variant="primary">저장</b-button>          
-          <b-button class="float-right" variant="primary" @click="modalClose">닫기</b-button> -->
+          <b-button ref="submitButton" class="float-right"  style="margin-left: 5px; display:none" type="submit" variant="primary">저장</b-button>          
+          <!-- <b-button class="float-right" variant="primary" @click="modalClose">닫기</b-button> -->
         </b-form>
 
         <div
@@ -144,21 +142,13 @@ export default {
       this.article = value;
     },
   },
-  methods: {
-    onSave(event) {
-      event.preventDefault();
-      this.onSubmit();
+  methods: {  
+    onSave(event) {    
+      this.$refs.submitButton.click();  
+      event.preventDefault();    
     },
-    onSubmit(event) {
-      var self = this;
-      if (this.editArticle.title === undefined) {
-          alert('제목을 입력하시기 바랍니다.')
-          return;
-      }
-      if (this.editArticle.content === undefined) {
-          alert('내용을 입력하시기 바랍니다.')
-          return;
-      }      
+    onSubmit() {
+      var self = this;  
       var confirmResult = confirm("저장 하시겠습니까?");
       if (confirmResult) {
         let url = "/api/article";
@@ -213,7 +203,7 @@ export default {
         return;
       }
     },
-    onDelete: function (event) {
+    onDelete: function () {
       var self = this;
       var confirmResult = confirm("삭제 하시겠습니까?");
       if (confirmResult) {
@@ -240,9 +230,11 @@ export default {
 </script>
 
 <style scoped>
+
 div {
   word-wrap: break-word;
   word-break: break-word;
   text-overflow: clip;
 }
+
 </style>
