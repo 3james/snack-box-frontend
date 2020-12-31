@@ -3,7 +3,7 @@
     <b-modal
       v-model="visible"
       id="modalNewArticle"
-      title="Story Box"
+      title="STORY BOX"
       size="lg"
       @close="modalClose"
       :header-bg-variant="headerBgVariant"
@@ -58,9 +58,11 @@
           <b-card-text class="small text-muted" size="lg">{{
             article.createdDate
           }}</b-card-text>
-          <b-card-text style="margin-top: 35px">{{
+          <!-- <b-card-text style="margin-top: 35px">{{
             article.content
-          }}</b-card-text>
+          }}</b-card-text> -->
+          <div style="border-bottom: 2px solid rgb(224, 218, 230, 0.5)"></div>
+          <p v-html="handleNewLine(article.content)" style="margin-top: 35px"></p>
         </div>
       </div>
       <div slot="modal-footer" class="w-100">
@@ -225,6 +227,9 @@ export default {
       this.$emit("closeModal");
       this.visible = false;
     },
+    handleNewLine: function(str) {    
+    return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
+   }
   },
 };
 </script>
