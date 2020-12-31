@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <b-container style="max-width: 1024px">
-      <b-navbar toggleable type="dark" variant="dark" style="padding: 3px 5px 3px 15px">
-        <b-navbar-brand >STORY BOX</b-navbar-brand>
-        <b-dropdown class="dropdown-style" size="sm" variant="outline-dark" right no-caret>
+  <div>    
+    <b-navbar class="navbar" type="light" variant="light" fixed="top" sticky>
+      <b-container class="container-w">
+        <b-navbar-brand class="d-flex justify-content-between">STORY BOX</b-navbar-brand>
+        <b-dropdown class="dropdown-style" size="sm" variant="outline-secondary" right no-caret>
           <template #button-content>
-            <b-button class="toggle-button" type="button" aria-label="Toggle navigation">
+            <b-button class="toggle-button" type="button">
               <span class="navbar-toggler-icon"></span>
             </b-button>   
           </template>        
@@ -14,9 +14,9 @@
           <b-dropdown-divider></b-dropdown-divider>              
           <b-dropdown-item href="#">로그인</b-dropdown-item>
           <b-dropdown-item @click="sighUp">회원가입</b-dropdown-item>
-        </b-dropdown>        
-      </b-navbar>
-    </b-container>
+        </b-dropdown>    
+      </b-container>            
+    </b-navbar>    
   </div>
 </template>
 
@@ -36,18 +36,24 @@ export default {
 
 <style scoped>
 
+.container-w {
+  max-width: 900px;
+}
+
+.navbar {
+  position: fixed;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: rgb(224, 218, 230)
+}
+
 .toggle-button {
-    color: rgba(255,255,255,.5);
-    border-color: rgba(255,255,255,.1);
-    padding: .25rem .75rem;
+    border-width: 0;
+    padding: .1rem .5rem;
     font-size: 1.11rem;    
     line-height: 1;
     background-color: transparent;
     border-radius: .25rem;    
-}
-
-.toggle-button:hover {
-  background-color: rgba(255,255,255,.1);
 }
 
 </style>
