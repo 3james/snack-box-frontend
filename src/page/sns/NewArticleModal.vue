@@ -52,9 +52,9 @@
           v-if="modalModeProp.isView"
           style="height: 470px; overflow-y: auto"
         >
-          <h4>
+          <h5>
             <b>{{ article.title }}</b>
-          </h4>
+          </h5>
           <b-card-text class="small text-muted" size="lg">{{
             article.createdDate
           }}</b-card-text>
@@ -103,9 +103,11 @@
 
 <script>
 import axios from "axios";
+import CommonMixin from '@/common/mixin/CommonMixin'
 
 export default {
-  name: "ModalNewArticle",
+  name: "NewArticleModeal",
+  mixins: [CommonMixin],    
   props: {
     visibleProp: {
       type: Boolean,
@@ -151,27 +153,30 @@ export default {
     },
     onSubmit() {
       var self = this;  
-      var confirmResult = confirm("저장 하시겠습니까?");
-      if (confirmResult) {
-        let url = "/api/article";
-        let param = {
-          title: this.editArticle.title,
-          content: this.editArticle.content,
-        };
 
-        axios
-          .post(url, param)
-          .then((reponse) => {
-            console.log(reponse);
-            self.modalClose();
-            this.$parent.getArticles();
-          })
-          .catch((ex) => {
-            console.warn("ERROR!! : ", ex);
-          });
-      } else {
-        return;
-      }
+      this.$bvModal.msgBoxConfirm('저장 하시겠습니까?', this.confirmDialogOption)
+        .then(confirmResult => {
+          if (confirmResult) {
+            let url = "/api/article";
+            let param = {
+              title: this.editArticle.title,
+              content: this.editArticle.content,
+            };
+            axios
+              .post(url, param)
+              .then((reponse) => {
+                console.log(reponse);
+                self.modalClose();
+                this.$parent.getArticles();
+              })
+              .catch((ex) => {
+                console.warn("ERROR!! : ", ex);
+              });
+          }
+      })
+        .catch(err => {
+          console.warn(err);
+      })
     },
     onModify: function (event) {
       event.preventDefault();
@@ -183,45 +188,52 @@ export default {
       }
 
       var self = this;
-      var confirmResult = confirm("수정 하시겠습니까?");
-      if (confirmResult) {
-        let url = "/api/article/" + this.article.articleId;
-        let param = {
-          title: this.editArticle.title,
-          content: this.editArticle.content,
-        };
 
-        axios
-          .put(url, param)
-          .then((reponse) => {
-            console.log(reponse);
-            self.modalClose();
-            this.$parent.getArticles();
-          })
-          .catch((ex) => {
-            console.warn("ERROR!! : ", ex);
-          });
-      } else {
-        return;
-      }
+      this.$bvModal.msgBoxConfirm('수정 하시겠습니까?', this.confirmDialogOption)
+        .then(confirmResult => {
+          if (confirmResult) {
+            let url = "/api/article/" + this.article.articleId;
+            let param = {
+              title: this.editArticle.title,
+              content: this.editArticle.content,
+            };
+            axios
+              .put(url, param)
+              .then((reponse) => {
+                console.log(reponse);
+                self.modalClose();
+                this.$parent.getArticles();
+              })
+              .catch((ex) => {
+                console.warn("ERROR!! : ", ex);
+              });
+          }
+      })
+        .catch(err => {
+          console.warn(err);
+      })
     },
     onDelete: function () {
       var self = this;
-      var confirmResult = confirm("삭제 하시겠습니까?");
-      if (confirmResult) {
-        axios
-          .delete("/api/article/" + this.article.articleId)
-          .then((reponse) => {
-            console.log(reponse);
-            self.modalClose();
-            this.$parent.getArticles();
-          })
-          .catch((ex) => {
-            console.warn("ERROR!! : ", ex);
-          });
-      } else {
-        return;
-      }
+      this.$bvModal.msgBoxConfirm('삭제 하시겠습니까?', this.confirmDialogOption)
+        .then(confirmResult => {
+          if (confirmResult) {
+            axios
+              .delete("/api/article/" + this.article.articleId)
+              .then((reponse) => {
+                console.log(reponse);
+                self.modalClose();
+                this.$parent.getArticles();
+              })
+              .catch((ex) => {
+                console.warn("ERROR!! : ", ex);
+              });
+          }
+      })
+        .catch(err => {
+          console.warn(err);
+      })
+    
     },
     modalClose: function () {
       this.$emit("closeModal");
