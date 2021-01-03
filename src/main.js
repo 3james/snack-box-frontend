@@ -6,9 +6,11 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import CommonAlertMessage from '@/components/CommonAlertMessage'
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.component('CommonAlertMessage', CommonAlertMessage)
 
 Vue.config.productionTip = false
 
