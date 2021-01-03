@@ -6,7 +6,7 @@
       :modalModeProp="modalModeForProp"
       @closeModal="onClose">       
     </new-article-modal>
-    <b-container class="p-0 container-w" fluid="md" style="border-bottom: 0.1px solid rgb(224, 218, 230)">
+    <b-container class="p-0" fluid="md">
       <b-card class="border-0 rounded-0 text-center overflow-hidden" no-body border-variant="info">
         <b-row class="top-banner" no-gutters align-v="center" >
           <b-col md="8">
@@ -23,7 +23,7 @@
         </b-row>        
       </b-card> 
     </b-container>
-    <b-container class="p-0 container-w" fluid="md">
+    <b-container class="p-0" fluid="md">
       <b-card class="mb-0 b-card-select rounded-0 wrap" 
               no-body 
               border-variant="link" 
@@ -45,7 +45,7 @@
 
       <b-card v-if="this.articleList.length === 0">
         <b-card-body>
-          <b-card-text class="text-center">{{"There is no data"}}</b-card-text>
+          <b-card-text class="text-center">{{"가장 먼저 글을 남겨주세요 !!!"}}</b-card-text>
         </b-card-body>
       </b-card>
     </b-container>
@@ -59,7 +59,7 @@ import NewArticleModal from "@/page/sns/NewArticleModal.vue";
 import axios from "axios";
 
 export default {
-  name: "SnsMain",
+  name: "SnsPage",
   components: {
     NewArticleModal
   },  
@@ -87,7 +87,7 @@ export default {
           this.articleList = res.data;     
         })
         .catch(ex => {
-          console.warn("ERROR!! : ", ex);
+          console.warn("ERROR!!! : ", ex);
         });
     },
     popupNewModal: function() {
@@ -117,12 +117,11 @@ export default {
 
 <style scoped>
 
-.container-w {
-  max-width: 900px;
-}
-
 .top-banner {
   background-color: #f3f1f1;
+  border-width: 0px 0.1px 0.1px 0px;
+  border-style: solid;
+  border-color: rgb(224, 218, 230)   
 }
 
 .list-title {
