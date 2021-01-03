@@ -1,14 +1,19 @@
 <template>
-  <layout/>
+    <router-view/>
 </template>
 
 <script>
 // @ is an alias to /src
-import Layout from "@/layout/Layout";
 
 export default {
-  name: "app",
-  components: {Layout}
+  name: "app"
 };
 </script>
 
+<style>
+
+body {
+  background: #edf0f3;
+}
+
+</style>

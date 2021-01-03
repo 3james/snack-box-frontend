@@ -1,19 +1,51 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Layout from "@/layout/Layout";
+
+import LoginPage from '@/page/login/LoginPage'
+import SignUpPage from '@/page/signup/SignUpPage'
 import SnsPage from '@/page/sns/SnsPage'
-import signUpPage from '@/page/signup/SignUpPage'
 
 Vue.use(Router)
 
 const router = new Router({
     routes: [
 
-        { path: '/', redirect: '/sns' },
+        { path: '/', redirect: '/login' },
 
-        { path: '/sns', component: SnsPage },
+        // { path: '/sns', component: snsPage },
 
-        { path: '/sign-up', component: signUpPage },
+        // { path: '/sign-up', component: signUpPage },
+
+        { path: '/login', component: LoginPage },
+
+        { path: '/sign-up', component: SignUpPage },
+
+        // {
+        //     path: '/login',
+        //     component: Layout,
+        //     children: [
+        //         { path: '', component: LoginPage }
+        //     ]
+        // },
+
+        // {
+        //     path: '/sign-up',
+        //     component: Layout,
+        //     children: [
+        //         { path: '', component: SignUpPage }
+        //     ]
+        // },
+
+        {
+            path: '/sns',
+            component: Layout,
+            children: [
+                { path: '', component: SnsPage }
+            ]
+        },
+
 
     ]
 })

@@ -11,18 +11,19 @@ import FrameHeader from '@/layout/frame/FrameHeader'
 import FrameBody from '@/layout/frame/FrameBody'
 
 export default {
-    name: 'layout',
-    components: {
-      FrameHeader, 
-      FrameBody
-    }
+  name: 'layout',
+  components: {
+    FrameHeader, 
+    FrameBody
+  }
 }
 </script>
 
 <style scoped>
 
 .frame-body {
-  margin: 56px 0 30px 0;
+  margin: 60px auto 0 auto;
+  max-width: 900px;
 }
 
 </style>
